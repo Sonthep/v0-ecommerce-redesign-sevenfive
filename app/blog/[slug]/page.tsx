@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </Link>
             </nav>
             <span className="text-accent text-sm font-medium">{post.category}</span>
-            <h1 className="text-foreground mt-2 text-3xl font-bold text-balance md:text-4xl">
+            <h1 className="text-foreground font-display mt-2 text-3xl font-bold text-balance md:text-4xl">
               {post.title}
             </h1>
             <p className="text-muted-foreground mt-4 text-lg">{post.excerpt}</p>
@@ -264,7 +264,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         {/* Related Posts */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-foreground text-2xl font-bold">Related Articles</h2>
+            <h2 className="text-foreground font-display text-2xl font-bold">Related Articles</h2>
             <div className="mt-8 grid gap-8 md:grid-cols-3">
               {relatedPosts.map((relatedPost) => (
                 <Link
@@ -296,7 +296,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
             <div className="bg-primary text-primary-foreground rounded-2xl p-8 text-center md:p-12">
-              <h2 className="text-2xl font-bold md:text-3xl">Ready to Choose Your Equipment?</h2>
+              <h2 className="font-display text-2xl font-bold md:text-3xl">
+                Ready to Choose Your Equipment?
+              </h2>
               <p className="text-primary-foreground/80 mx-auto mt-4 max-w-xl">
                 Our experts are here to help you find the perfect equipment for your kitchen. Get
                 personalized recommendations and competitive pricing.

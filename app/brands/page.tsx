@@ -133,16 +133,16 @@ export default function BrandsPage() {
         {/* Header */}
         <section className="bg-primary text-primary-foreground py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <nav className="flex items-center gap-2 text-sm text-primary-foreground/60 mb-6">
+            <nav className="text-primary-foreground/60 mb-6 flex items-center gap-2 text-sm">
               <Link href="/" className="hover:text-primary-foreground transition-colors">
                 Home
               </Link>
               <ChevronRight className="h-4 w-4" />
               <span className="text-primary-foreground">Brands</span>
             </nav>
-            <h1 className="text-4xl font-bold">Our Brands</h1>
-            <p className="mt-4 text-lg text-primary-foreground/80 max-w-2xl">
-              We partner with the world&apos;s leading manufacturers to bring you the finest 
+            <h1 className="font-display text-4xl font-bold">Our Brands</h1>
+            <p className="text-primary-foreground/80 mt-4 max-w-2xl text-lg">
+              We partner with the world&apos;s leading manufacturers to bring you the finest
               commercial kitchen equipment. Quality, reliability, and performance guaranteed.
             </p>
           </div>
@@ -151,8 +151,8 @@ export default function BrandsPage() {
         {/* Featured Brands */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-2xl font-bold text-foreground">Featured Brands</h2>
-            <p className="mt-2 text-muted-foreground">
+            <h2 className="font-display text-foreground text-2xl font-bold">Featured Brands</h2>
+            <p className="text-muted-foreground mt-2">
               Premium brands we&apos;re proud to represent
             </p>
 
@@ -161,7 +161,7 @@ export default function BrandsPage() {
                 <Link
                   key={brand.name}
                   href={`/brands/${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="group rounded-xl border border-border bg-card p-6 transition-all hover:shadow-lg hover:border-foreground/20"
+                  className="group border-border bg-card hover:border-foreground/20 rounded-xl border p-6 transition-all hover:shadow-lg"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex h-16 w-32 items-center">
@@ -173,31 +173,31 @@ export default function BrandsPage() {
                         className="h-8 w-auto object-contain"
                       />
                     </div>
-                    <span className="rounded-full bg-secondary px-2 py-1 text-xs font-medium text-secondary-foreground">
+                    <span className="bg-secondary text-secondary-foreground rounded-full px-2 py-1 text-xs font-medium">
                       {brand.country}
                     </span>
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
+                  <h3 className="text-foreground group-hover:text-accent mt-4 text-lg font-semibold transition-colors">
                     {brand.name}
                   </h3>
-                  <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                  <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
                     {brand.description}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {brand.categories.slice(0, 3).map((cat) => (
                       <span
                         key={cat}
-                        className="rounded-full bg-secondary px-2 py-0.5 text-xs text-secondary-foreground"
+                        className="bg-secondary text-secondary-foreground rounded-full px-2 py-0.5 text-xs"
                       >
                         {cat}
                       </span>
                     ))}
                   </div>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-muted-foreground text-sm">
                       {brand.productCount} products
                     </span>
-                    <span className="flex items-center text-sm font-medium text-foreground group-hover:text-accent transition-colors">
+                    <span className="text-foreground group-hover:text-accent flex items-center text-sm font-medium transition-colors">
                       View Products
                       <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </span>
@@ -211,27 +211,23 @@ export default function BrandsPage() {
         {/* All Brands A-Z */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-2xl font-bold text-foreground">All Brands A-Z</h2>
-            <p className="mt-2 text-muted-foreground">
-              Browse our complete brand portfolio
-            </p>
+            <h2 className="font-display text-foreground text-2xl font-bold">All Brands A-Z</h2>
+            <p className="text-muted-foreground mt-2">Browse our complete brand portfolio</p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {allBrandsAlphabetical.map((brand) => (
                 <Link
                   key={brand.name}
                   href={`/brands/${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="group flex items-center justify-between rounded-lg border border-border bg-card p-4 transition-all hover:border-foreground/20"
+                  className="group border-border bg-card hover:border-foreground/20 flex items-center justify-between rounded-lg border p-4 transition-all"
                 >
                   <div>
-                    <h3 className="font-medium text-foreground group-hover:text-accent transition-colors">
+                    <h3 className="text-foreground group-hover:text-accent font-medium transition-colors">
                       {brand.name}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {brand.productCount} products
-                    </p>
+                    <p className="text-muted-foreground text-sm">{brand.productCount} products</p>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-accent" />
+                  <ArrowRight className="text-muted-foreground group-hover:text-accent h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               ))}
             </div>
@@ -241,15 +237,17 @@ export default function BrandsPage() {
         {/* Become a Partner CTA */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="rounded-2xl bg-primary p-8 md:p-12 text-center text-primary-foreground">
-              <h2 className="text-2xl font-bold md:text-3xl">Interested in Partnership?</h2>
-              <p className="mt-4 text-primary-foreground/80 max-w-2xl mx-auto">
-                We&apos;re always looking to expand our brand portfolio with quality manufacturers. 
+            <div className="bg-primary text-primary-foreground rounded-2xl p-8 text-center md:p-12">
+              <h2 className="font-display text-2xl font-bold md:text-3xl">
+                Interested in Partnership?
+              </h2>
+              <p className="text-primary-foreground/80 mx-auto mt-4 max-w-2xl">
+                We&apos;re always looking to expand our brand portfolio with quality manufacturers.
                 If you represent a premium kitchen equipment brand, let&apos;s talk.
               </p>
               <Link
                 href="/contact"
-                className="mt-6 inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-medium text-accent-foreground hover:bg-accent/90 transition-colors"
+                className="bg-accent text-accent-foreground hover:bg-accent/90 mt-6 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium transition-colors"
               >
                 Contact Our Team
                 <ArrowRight className="ml-2 h-4 w-4" />

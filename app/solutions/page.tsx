@@ -101,29 +101,29 @@ export default function SolutionsPage() {
         {/* Header */}
         <section className="bg-primary text-primary-foreground py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <nav className="flex items-center gap-2 text-sm text-primary-foreground/60 mb-6">
+            <nav className="text-primary-foreground/60 mb-6 flex items-center gap-2 text-sm">
               <Link href="/" className="hover:text-primary-foreground transition-colors">
                 Home
               </Link>
               <ChevronRight className="h-4 w-4" />
               <span className="text-primary-foreground">Solutions</span>
             </nav>
-            <h1 className="text-4xl font-bold">Industry Solutions</h1>
-            <p className="mt-4 text-lg text-primary-foreground/80 max-w-2xl">
-              Every business has unique needs. Our team of experts designs customized 
-              kitchen solutions that maximize efficiency, quality, and return on investment.
+            <h1 className="font-display text-4xl font-bold">Industry Solutions</h1>
+            <p className="text-primary-foreground/80 mt-4 max-w-2xl text-lg">
+              Every business has unique needs. Our team of experts designs customized kitchen
+              solutions that maximize efficiency, quality, and return on investment.
             </p>
           </div>
         </section>
 
         {/* Stats */}
-        <section className="border-b border-border bg-card">
+        <section className="border-border bg-card border-b">
           <div className="mx-auto max-w-7xl px-4 py-12">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-3xl font-bold text-foreground md:text-4xl">{stat.value}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
+                  <p className="text-foreground text-3xl font-bold md:text-4xl">{stat.value}</p>
+                  <p className="text-muted-foreground mt-1 text-sm">{stat.label}</p>
                 </div>
               ))}
             </div>
@@ -133,11 +133,13 @@ export default function SolutionsPage() {
         {/* Industries */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground">Solutions by Industry</h2>
-              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                Select your industry to explore tailored equipment solutions and see 
-                how we&apos;ve helped similar businesses succeed.
+            <div className="mb-12 text-center">
+              <h2 className="font-display text-foreground text-3xl font-bold">
+                Solutions by Industry
+              </h2>
+              <p className="text-muted-foreground mx-auto mt-4 max-w-2xl">
+                Select your industry to explore tailored equipment solutions and see how we&apos;ve
+                helped similar businesses succeed.
               </p>
             </div>
 
@@ -146,7 +148,7 @@ export default function SolutionsPage() {
                 <Link
                   key={industry.slug}
                   href={`/solutions/${industry.slug}`}
-                  className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:shadow-lg hover:border-foreground/20"
+                  className="group border-border bg-card hover:border-foreground/20 overflow-hidden rounded-xl border transition-all hover:shadow-lg"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
@@ -161,16 +163,16 @@ export default function SolutionsPage() {
                     </div>
                   </div>
                   <div className="p-6">
-                    <p className="text-sm text-muted-foreground">{industry.description}</p>
+                    <p className="text-muted-foreground text-sm">{industry.description}</p>
                     <ul className="mt-4 space-y-2">
                       {industry.features.slice(0, 3).map((feature) => (
                         <li key={feature} className="flex items-center gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
+                          <CheckCircle2 className="text-accent h-4 w-4 shrink-0" />
                           <span className="text-foreground">{feature}</span>
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-4 flex items-center text-sm font-medium text-foreground group-hover:text-accent transition-colors">
+                    <div className="text-foreground group-hover:text-accent mt-4 flex items-center text-sm font-medium transition-colors">
                       Learn More
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </div>
@@ -184,11 +186,11 @@ export default function SolutionsPage() {
         {/* Process */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground">Our Process</h2>
-              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                From initial consultation to after-sales support, we guide you through 
-                every step of your kitchen project.
+            <div className="mb-12 text-center">
+              <h2 className="font-display text-foreground text-3xl font-bold">Our Process</h2>
+              <p className="text-muted-foreground mx-auto mt-4 max-w-2xl">
+                From initial consultation to after-sales support, we guide you through every step of
+                your kitchen project.
               </p>
             </div>
 
@@ -220,11 +222,11 @@ export default function SolutionsPage() {
                 },
               ].map((item) => (
                 <div key={item.step} className="relative">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold">
+                  <div className="bg-primary text-primary-foreground flex h-12 w-12 items-center justify-center rounded-full font-bold">
                     {item.step}
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{item.description}</p>
+                  <h3 className="text-foreground mt-4 text-lg font-semibold">{item.title}</h3>
+                  <p className="text-muted-foreground mt-2 text-sm">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -234,25 +236,25 @@ export default function SolutionsPage() {
         {/* CTA */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="rounded-2xl bg-primary p-8 md:p-12 text-center text-primary-foreground">
-              <h2 className="text-2xl font-bold md:text-3xl text-balance">
+            <div className="bg-primary text-primary-foreground rounded-2xl p-8 text-center md:p-12">
+              <h2 className="font-display text-2xl font-bold text-balance md:text-3xl">
                 Ready to Transform Your Kitchen?
               </h2>
-              <p className="mt-4 text-primary-foreground/80 max-w-2xl mx-auto">
-                Let our experts design the perfect solution for your business. 
-                Get a free consultation and quote today.
+              <p className="text-primary-foreground/80 mx-auto mt-4 max-w-2xl">
+                Let our experts design the perfect solution for your business. Get a free
+                consultation and quote today.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-medium text-accent-foreground hover:bg-accent/90 transition-colors"
+                  className="bg-accent text-accent-foreground hover:bg-accent/90 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium transition-colors"
                 >
                   Schedule Consultation
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
                 <Link
                   href="/category"
-                  className="inline-flex items-center justify-center rounded-md border border-primary-foreground/30 px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10 transition-colors"
+                  className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-medium transition-colors"
                 >
                   Browse Equipment
                 </Link>

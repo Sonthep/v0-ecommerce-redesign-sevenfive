@@ -102,33 +102,33 @@ export default function BlogPage() {
         {/* Header */}
         <section className="bg-primary text-primary-foreground py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <nav className="flex items-center gap-2 text-sm text-primary-foreground/60 mb-6">
+            <nav className="text-primary-foreground/60 mb-6 flex items-center gap-2 text-sm">
               <Link href="/" className="hover:text-primary-foreground transition-colors">
                 Home
               </Link>
               <ChevronRight className="h-4 w-4" />
               <span className="text-primary-foreground">Blog & Guides</span>
             </nav>
-            <h1 className="text-4xl font-bold">Blog & Buying Guides</h1>
-            <p className="mt-4 text-lg text-primary-foreground/80 max-w-2xl">
-              Expert insights, buying guides, and industry knowledge to help you make 
-              informed decisions about your commercial kitchen equipment.
+            <h1 className="font-display text-4xl font-bold">Blog & Buying Guides</h1>
+            <p className="text-primary-foreground/80 mt-4 max-w-2xl text-lg">
+              Expert insights, buying guides, and industry knowledge to help you make informed
+              decisions about your commercial kitchen equipment.
             </p>
           </div>
         </section>
 
         {/* Categories */}
-        <section className="border-b border-border bg-card">
+        <section className="border-border bg-card border-b">
           <div className="mx-auto max-w-7xl px-4 py-4">
-            <div className="flex gap-3 overflow-x-auto pb-2 -mb-2 scrollbar-hide">
+            <div className="scrollbar-hide -mb-2 flex gap-3 overflow-x-auto pb-2">
               {categories.map((cat) => (
                 <Link
                   key={cat.slug}
                   href={cat.slug === "all" ? "/blog" : `/blog/category/${cat.slug}`}
-                  className="flex-shrink-0 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:border-foreground hover:bg-secondary transition-colors"
+                  className="border-border bg-background text-foreground hover:border-foreground hover:bg-secondary flex-shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
                 >
                   {cat.name}
-                  <span className="ml-2 text-muted-foreground">({cat.count})</span>
+                  <span className="text-muted-foreground ml-2">({cat.count})</span>
                 </Link>
               ))}
             </div>
@@ -140,7 +140,7 @@ export default function BlogPage() {
           <div className="mx-auto max-w-7xl px-4">
             <Link
               href={`/blog/${featuredPost.slug}`}
-              className="group grid gap-8 md:grid-cols-2 items-center"
+              className="group grid items-center gap-8 md:grid-cols-2"
             >
               <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
                 <Image
@@ -149,21 +149,19 @@ export default function BlogPage() {
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute left-4 top-4">
-                  <span className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">
+                <div className="absolute top-4 left-4">
+                  <span className="bg-accent text-accent-foreground rounded-full px-3 py-1 text-xs font-medium">
                     Featured
                   </span>
                 </div>
               </div>
               <div>
-                <span className="text-sm font-medium text-accent">{featuredPost.category}</span>
-                <h2 className="mt-2 text-2xl font-bold text-foreground md:text-3xl group-hover:text-accent transition-colors">
+                <span className="text-accent text-sm font-medium">{featuredPost.category}</span>
+                <h2 className="font-display text-foreground group-hover:text-accent mt-2 text-2xl font-bold transition-colors md:text-3xl">
                   {featuredPost.title}
                 </h2>
-                <p className="mt-4 text-muted-foreground leading-relaxed">
-                  {featuredPost.excerpt}
-                </p>
-                <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
+                <p className="text-muted-foreground mt-4 leading-relaxed">{featuredPost.excerpt}</p>
+                <div className="text-muted-foreground mt-6 flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4" />
                     {featuredPost.author}
@@ -173,7 +171,7 @@ export default function BlogPage() {
                     {featuredPost.readTime}
                   </div>
                 </div>
-                <div className="mt-6 flex items-center text-sm font-medium text-foreground group-hover:text-accent transition-colors">
+                <div className="text-foreground group-hover:text-accent mt-6 flex items-center text-sm font-medium transition-colors">
                   Read Article
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
@@ -185,13 +183,13 @@ export default function BlogPage() {
         {/* All Posts */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-2xl font-bold text-foreground">Latest Articles</h2>
+            <h2 className="font-display text-foreground text-2xl font-bold">Latest Articles</h2>
             <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {posts.map((post) => (
                 <Link
                   key={post.slug}
                   href={`/blog/${post.slug}`}
-                  className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:shadow-lg hover:border-foreground/20"
+                  className="group border-border bg-card hover:border-foreground/20 overflow-hidden rounded-xl border transition-all hover:shadow-lg"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
@@ -202,16 +200,16 @@ export default function BlogPage() {
                     />
                   </div>
                   <div className="p-6">
-                    <span className="text-xs font-medium uppercase tracking-wider text-accent">
+                    <span className="text-accent text-xs font-medium tracking-wider uppercase">
                       {post.category}
                     </span>
-                    <h3 className="mt-2 font-semibold text-foreground line-clamp-2 group-hover:text-accent transition-colors">
+                    <h3 className="text-foreground group-hover:text-accent mt-2 line-clamp-2 font-semibold transition-colors">
                       {post.title}
                     </h3>
-                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                    <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
                       {post.excerpt}
                     </p>
-                    <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
+                    <div className="text-muted-foreground mt-4 flex items-center gap-4 text-xs">
                       <span>{post.date}</span>
                       <span>{post.readTime}</span>
                     </div>
@@ -222,7 +220,7 @@ export default function BlogPage() {
 
             {/* Load More */}
             <div className="mt-12 text-center">
-              <button className="inline-flex items-center justify-center rounded-md border border-border bg-card px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors">
+              <button className="border-border bg-card text-foreground hover:bg-secondary inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-medium transition-colors">
                 Load More Articles
               </button>
             </div>
@@ -232,21 +230,21 @@ export default function BlogPage() {
         {/* Newsletter */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="rounded-2xl bg-primary p-8 md:p-12 text-center text-primary-foreground">
-              <h2 className="text-2xl font-bold md:text-3xl">Stay Updated</h2>
-              <p className="mt-4 text-primary-foreground/80 max-w-xl mx-auto">
-                Subscribe to our newsletter for the latest industry insights, 
-                buying guides, and exclusive offers.
+            <div className="bg-primary text-primary-foreground rounded-2xl p-8 text-center md:p-12">
+              <h2 className="font-display text-2xl font-bold md:text-3xl">Stay Updated</h2>
+              <p className="text-primary-foreground/80 mx-auto mt-4 max-w-xl">
+                Subscribe to our newsletter for the latest industry insights, buying guides, and
+                exclusive offers.
               </p>
-              <form className="mt-8 flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <form className="mx-auto mt-8 flex max-w-md flex-col gap-4 sm:flex-row">
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 rounded-md bg-sidebar-accent px-4 py-3 text-sm text-primary-foreground placeholder:text-primary-foreground/50 focus:outline-none focus:ring-2 focus:ring-accent"
+                  className="bg-sidebar-accent text-primary-foreground placeholder:text-primary-foreground/50 focus:ring-accent flex-1 rounded-md px-4 py-3 text-sm focus:ring-2 focus:outline-none"
                 />
                 <button
                   type="submit"
-                  className="rounded-md bg-accent px-6 py-3 text-sm font-medium text-accent-foreground hover:bg-accent/90 transition-colors"
+                  className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-md px-6 py-3 text-sm font-medium transition-colors"
                 >
                   Subscribe
                 </button>

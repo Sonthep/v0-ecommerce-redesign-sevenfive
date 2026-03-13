@@ -100,7 +100,9 @@ export default function ComparePage() {
         <SiteHeader />
         <main className="flex flex-1 items-center justify-center">
           <div className="px-4 text-center">
-            <h1 className="text-foreground mb-4 text-2xl font-bold">No Products to Compare</h1>
+            <h1 className="text-foreground font-display mb-4 text-2xl font-bold">
+              No Products to Compare
+            </h1>
             <p className="text-muted-foreground mb-6 max-w-md">
               Add products to your comparison list from the category or product pages to see them
               side by side.
@@ -131,7 +133,9 @@ export default function ComparePage() {
                 <ArrowLeft className="mr-1 h-4 w-4" />
                 Back to products
               </Link>
-              <h1 className="text-foreground text-2xl font-bold md:text-3xl">Compare Products</h1>
+              <h1 className="text-foreground font-display text-2xl font-bold md:text-3xl">
+                Compare Products
+              </h1>
               <p className="text-muted-foreground mt-1">Comparing {compareList.length} products</p>
             </div>
             <Button variant="outline" onClick={clearCompare}>

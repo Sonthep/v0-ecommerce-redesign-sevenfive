@@ -162,7 +162,9 @@ export default async function SolutionDetailPage({
                 <ChevronRight className="h-4 w-4" />
                 <span className="text-white">{solutionData.name}</span>
               </nav>
-              <h1 className="text-3xl font-bold text-white md:text-4xl">{solutionData.name}</h1>
+              <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
+                {solutionData.name}
+              </h1>
               <p className="mt-2 max-w-2xl text-lg text-white/80">{solutionData.tagline}</p>
             </div>
           </div>

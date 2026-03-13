@@ -23,7 +23,8 @@ const categories = [
   },
   {
     name: "Food Preparation",
-    description: "Mixers, food processors, slicers and prep equipment for efficient kitchen operations.",
+    description:
+      "Mixers, food processors, slicers and prep equipment for efficient kitchen operations.",
     image: "/images/categories/food-prep.jpg",
     href: "/category/food-preparation",
     productCount: 1560,
@@ -65,17 +66,17 @@ export default function CategoriesPage() {
         <section className="bg-primary text-primary-foreground py-16">
           <div className="mx-auto max-w-7xl px-4">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-sm text-primary-foreground/60 mb-6">
+            <nav className="text-primary-foreground/60 mb-6 flex items-center gap-2 text-sm">
               <Link href="/" className="hover:text-primary-foreground transition-colors">
                 Home
               </Link>
               <ChevronRight className="h-4 w-4" />
               <span className="text-primary-foreground">Categories</span>
             </nav>
-            <h1 className="text-4xl font-bold">All Categories</h1>
-            <p className="mt-4 text-lg text-primary-foreground/80 max-w-2xl">
-              Browse our comprehensive selection of professional kitchen equipment 
-              organized by category. Find everything you need to equip your commercial kitchen.
+            <h1 className="font-display text-4xl font-bold">All Categories</h1>
+            <p className="text-primary-foreground/80 mt-4 max-w-2xl text-lg">
+              Browse our comprehensive selection of professional kitchen equipment organized by
+              category. Find everything you need to equip your commercial kitchen.
             </p>
           </div>
         </section>
@@ -88,7 +89,7 @@ export default function CategoriesPage() {
                 <Link
                   key={category.name}
                   href={category.href}
-                  className="group relative overflow-hidden rounded-xl border border-border bg-card transition-all hover:shadow-lg hover:border-foreground/20"
+                  className="group border-border bg-card hover:border-foreground/20 relative overflow-hidden rounded-xl border transition-all hover:shadow-lg"
                 >
                   {/* Image */}
                   <div className="relative aspect-[16/10] overflow-hidden">
@@ -99,8 +100,8 @@ export default function CategoriesPage() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <span className="inline-block rounded bg-white/20 backdrop-blur-sm px-2 py-1 text-xs font-medium text-white">
+                    <div className="absolute right-4 bottom-4 left-4">
+                      <span className="inline-block rounded bg-white/20 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
                         {category.productCount.toLocaleString()} Products
                       </span>
                     </div>
@@ -108,10 +109,10 @@ export default function CategoriesPage() {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h2 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
+                    <h2 className="text-foreground group-hover:text-accent text-xl font-semibold transition-colors">
                       {category.name}
                     </h2>
-                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                    <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
                       {category.description}
                     </p>
 
@@ -120,20 +121,20 @@ export default function CategoriesPage() {
                       {category.subcategories.slice(0, 3).map((sub) => (
                         <span
                           key={sub}
-                          className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground"
+                          className="bg-secondary text-secondary-foreground rounded-full px-3 py-1 text-xs"
                         >
                           {sub}
                         </span>
                       ))}
                       {category.subcategories.length > 3 && (
-                        <span className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground">
+                        <span className="bg-secondary text-muted-foreground rounded-full px-3 py-1 text-xs">
                           +{category.subcategories.length - 3} more
                         </span>
                       )}
                     </div>
 
                     {/* CTA */}
-                    <div className="mt-4 flex items-center text-sm font-medium text-foreground group-hover:text-accent transition-colors">
+                    <div className="text-foreground group-hover:text-accent mt-4 flex items-center text-sm font-medium transition-colors">
                       Browse Category
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </div>
@@ -147,24 +148,24 @@ export default function CategoriesPage() {
         {/* Help Section */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="rounded-xl bg-card p-8 md:p-12 text-center">
-              <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+            <div className="bg-card rounded-xl p-8 text-center md:p-12">
+              <h2 className="font-display text-foreground text-2xl font-bold md:text-3xl">
                 Need Help Finding Equipment?
               </h2>
-              <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-                Our team of experts is here to help you find the perfect equipment 
-                for your commercial kitchen. Get personalized recommendations based on your needs.
+              <p className="text-muted-foreground mx-auto mt-4 max-w-2xl">
+                Our team of experts is here to help you find the perfect equipment for your
+                commercial kitchen. Get personalized recommendations based on your needs.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium transition-colors"
                 >
                   Contact an Expert
                 </Link>
                 <Link
                   href="/blog"
-                  className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                  className="border-border text-foreground hover:bg-secondary inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-medium transition-colors"
                 >
                   Read Buying Guides
                 </Link>

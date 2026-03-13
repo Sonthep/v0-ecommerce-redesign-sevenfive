@@ -190,7 +190,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                 <ChevronRight className="h-4 w-4" />
                 <span className="text-white">{categoryData.name}</span>
               </nav>
-              <h1 className="text-3xl font-bold text-white md:text-4xl">{categoryData.name}</h1>
+              <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
+                {categoryData.name}
+              </h1>
               <p className="mt-2 max-w-2xl text-white/80">{categoryData.description}</p>
             </div>
           </div>
