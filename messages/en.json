@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "products": "Products",
+    "categories": "Categories",
+    "solutions": "Solutions",
+    "blog": "Blog",
+    "compare": "Compare",
+    "cart": "Cart",
+    "wishlist": "Wishlist",
+    "account": "Account",
+    "brands": "Brands"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "back": "Back",
+    "close": "Close",
+    "new": "New",
+    "sale": "Sale",
+    "viewAll": "View All",
+    "shopNow": "Shop Now",
+    "exploreNow": "Explore"
+  },
+  "header": {
+    "afterSales": "365 Days After-Sales Service",
+    "freeDelivery": "Free Delivery on Orders Over 5,000 THB",
+    "contact": "Contact Us",
+    "about": "About",
+    "megaMenuDesc": "Browse our extensive selection of professional-grade equipment designed for commercial kitchens.",
+    "featuredBrand": "Featured Brand",
+    "featuredBrandDesc": "Discover top-quality equipment from industry-leading manufacturers.",
+    "exploreBrands": "Explore Brands"
+  },
+  "home": {
+    "hero": {
+      "tagline": "Professional Kitchen Solutions",
+      "title": "Equip Your Kitchen for Excellence",
+      "description": "Thailand's trusted partner for commercial kitchen equipment. Over 30,000 products from world-leading brands with expert consultation and comprehensive after-sales support.",
+      "browseProducts": "Browse Products",
+      "getQuote": "Get a Quote",
+      "statsProducts": "Products Available",
+      "statsYears": "Years Experience"
+    },
+    "features": {
+      "delivery": { "title": "Free Delivery", "desc": "On orders over 5,000 THB" },
+      "price": { "title": "Best Price Guarantee", "desc": "Competitive pricing always" },
+      "support": { "title": "365 Days Support", "desc": "24/7 after-sales service" },
+      "products": { "title": "30,000+ Products", "desc": "Extensive selection" }
+    },
+    "categories": {
+      "eyebrow": "Shop by Category",
+      "title": "Equipment Categories",
+      "viewAll": "View All Categories",
+      "shopNow": "Shop Now"
+    },
+    "featuredProducts": {
+      "eyebrow": "Curated Selection",
+      "title": "Featured Products",
+      "viewAll": "View All Products"
+    },
+    "solutions": {
+      "eyebrow": "Tailored Solutions",
+      "title": "Solutions by Industry",
+      "description": "We understand that every business has unique requirements. Our experts can help design the perfect kitchen setup for your specific needs.",
+      "explore": "Explore Solutions"
+    },
+    "brands": {
+      "eyebrow": "Trusted Partners",
+      "title": "World-Leading Brands",
+      "viewAll": "View All Brands"
+    },
+    "cta": {
+      "title": "Ready to Equip Your Kitchen?",
+      "description": "Our team of experts is ready to help you find the perfect equipment for your commercial kitchen. Get in touch for a personalized consultation.",
+      "requestQuote": "Request a Quote",
+      "buyingGuides": "Read Buying Guides"
+    }
+  }
+}

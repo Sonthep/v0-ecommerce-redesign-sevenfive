@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Truck, Shield, HeadphonesIcon, Award } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
@@ -97,30 +98,32 @@ const brands = [
   { name: "Winterhalter", logo: "/images/brands/winterhalter.svg" },
 ]
 
-const features = [
+const solutions = [
   {
-    icon: Truck,
-    title: "Free Delivery",
-    description: "On orders over 5,000 THB",
+    nameKey: "Restaurants",
+    image: "/images/solutions/restaurant.jpg",
+    href: "/solutions/restaurants",
   },
-  {
-    icon: Shield,
-    title: "Best Price Guarantee",
-    description: "Competitive pricing always",
-  },
-  {
-    icon: HeadphonesIcon,
-    title: "365 Days Support",
-    description: "24/7 after-sales service",
-  },
-  {
-    icon: Award,
-    title: "30,000+ Products",
-    description: "Extensive selection",
-  },
+  { nameKey: "Hotels", image: "/images/solutions/hotel.jpg", href: "/solutions/hotels" },
+  { nameKey: "Cafes", image: "/images/solutions/cafe.jpg", href: "/solutions/cafes" },
+  { nameKey: "Bakeries", image: "/images/solutions/bakery.jpg", href: "/solutions/bakeries" },
 ]
 
-export default function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "home" })
+
+  const features = [
+    { icon: Truck, title: t("features.delivery.title"), description: t("features.delivery.desc") },
+    { icon: Shield, title: t("features.price.title"), description: t("features.price.desc") },
+    {
+      icon: HeadphonesIcon,
+      title: t("features.support.title"),
+      description: t("features.support.desc"),
+    },
+    { icon: Award, title: t("features.products.title"), description: t("features.products.desc") },
+  ]
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -133,15 +136,13 @@ export default function HomePage() {
             <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8">
               <div className="max-w-xl">
                 <p className="text-primary-foreground/60 text-sm font-medium tracking-widest uppercase">
-                  Professional Kitchen Solutions
+                  {t("hero.tagline")}
                 </p>
                 <h1 className="font-display mt-4 text-4xl font-bold tracking-tight text-balance md:text-5xl lg:text-6xl">
-                  Equip Your Kitchen for Excellence
+                  {t("hero.title")}
                 </h1>
                 <p className="text-primary-foreground/80 mt-6 text-lg leading-relaxed">
-                  Thailand&apos;s trusted partner for commercial kitchen equipment. Over 30,000
-                  products from world-leading brands with expert consultation and comprehensive
-                  after-sales support.
+                  {t("hero.description")}
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
                   <Button
@@ -149,8 +150,8 @@ export default function HomePage() {
                     className="bg-accent text-accent-foreground hover:bg-accent/90"
                     asChild
                   >
-                    <Link href="/category">
-                      Browse Products
+                    <Link href={`/${locale}/category`}>
+                      {t("hero.browseProducts")}
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -160,7 +161,7 @@ export default function HomePage() {
                     className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
                     asChild
                   >
-                    <Link href="/contact">Get a Quote</Link>
+                    <Link href={`/${locale}/contact`}>{t("hero.getQuote")}</Link>
                   </Button>
                 </div>
               </div>
@@ -174,14 +175,13 @@ export default function HomePage() {
                     priority
                   />
                 </div>
-                {/* Stats overlay */}
                 <div className="bg-card absolute -bottom-6 -left-6 rounded-xl p-6 shadow-xl">
                   <p className="text-foreground text-4xl font-bold">30K+</p>
-                  <p className="text-muted-foreground text-sm">Products Available</p>
+                  <p className="text-muted-foreground text-sm">{t("hero.statsProducts")}</p>
                 </div>
                 <div className="bg-card absolute top-1/4 -right-6 rounded-xl p-6 shadow-xl">
                   <p className="text-foreground text-4xl font-bold">25+</p>
-                  <p className="text-muted-foreground text-sm">Years Experience</p>
+                  <p className="text-muted-foreground text-sm">{t("hero.statsYears")}</p>
                 </div>
               </div>
             </div>
@@ -213,17 +213,17 @@ export default function HomePage() {
             <div className="mb-12 flex items-end justify-between">
               <div>
                 <p className="text-muted-foreground text-sm font-medium tracking-widest uppercase">
-                  Shop by Category
+                  {t("categories.eyebrow")}
                 </p>
                 <h2 className="font-display text-foreground mt-2 text-3xl font-bold">
-                  Equipment Categories
+                  {t("categories.title")}
                 </h2>
               </div>
               <Link
-                href="/category"
+                href={`/${locale}/category`}
                 className="text-foreground hover:text-accent hidden items-center gap-2 text-sm font-medium transition-colors sm:flex"
               >
-                View All Categories
+                {t("categories.viewAll")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -232,7 +232,7 @@ export default function HomePage() {
               {categories.map((category, index) => (
                 <Link
                   key={category.name}
-                  href={category.href}
+                  href={`/${locale}${category.href}`}
                   className={`group relative overflow-hidden rounded-xl ${
                     index === 0 ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : ""
                   }`}
@@ -255,7 +255,7 @@ export default function HomePage() {
                       </h3>
                       <p className="mt-1 text-sm text-white/80">{category.description}</p>
                       <span className="group-hover:text-accent mt-3 inline-flex items-center text-sm font-medium text-white transition-colors">
-                        Shop Now
+                        {t("categories.shopNow")}
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </span>
                     </div>
@@ -272,17 +272,17 @@ export default function HomePage() {
             <div className="mb-12 flex items-end justify-between">
               <div>
                 <p className="text-muted-foreground text-sm font-medium tracking-widest uppercase">
-                  Curated Selection
+                  {t("featuredProducts.eyebrow")}
                 </p>
                 <h2 className="font-display text-foreground mt-2 text-3xl font-bold">
-                  Featured Products
+                  {t("featuredProducts.title")}
                 </h2>
               </div>
               <Link
-                href="/products"
+                href={`/${locale}/products`}
                 className="text-foreground hover:text-accent hidden items-center gap-2 text-sm font-medium transition-colors sm:flex"
               >
-                View All Products
+                {t("featuredProducts.viewAll")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -300,48 +300,34 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4">
             <div className="mb-12 text-center">
               <p className="text-muted-foreground text-sm font-medium tracking-widest uppercase">
-                Tailored Solutions
+                {t("solutions.eyebrow")}
               </p>
               <h2 className="font-display text-foreground mt-2 text-3xl font-bold">
-                Solutions by Industry
+                {t("solutions.title")}
               </h2>
               <p className="text-muted-foreground mx-auto mt-4 max-w-2xl">
-                We understand that every business has unique requirements. Our experts can help
-                design the perfect kitchen setup for your specific needs.
+                {t("solutions.description")}
               </p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  name: "Restaurants",
-                  image: "/images/solutions/restaurant.jpg",
-                  href: "/solutions/restaurants",
-                },
-                { name: "Hotels", image: "/images/solutions/hotel.jpg", href: "/solutions/hotels" },
-                { name: "Cafes", image: "/images/solutions/cafe.jpg", href: "/solutions/cafes" },
-                {
-                  name: "Bakeries",
-                  image: "/images/solutions/bakery.jpg",
-                  href: "/solutions/bakeries",
-                },
-              ].map((solution) => (
+              {solutions.map((solution) => (
                 <Link
-                  key={solution.name}
-                  href={solution.href}
+                  key={solution.nameKey}
+                  href={`/${locale}${solution.href}`}
                   className="group relative aspect-[3/4] overflow-hidden rounded-xl"
                 >
                   <Image
                     src={solution.image}
-                    alt={solution.name}
+                    alt={solution.nameKey}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <h3 className="text-xl font-semibold text-white">{solution.name}</h3>
+                    <h3 className="text-xl font-semibold text-white">{solution.nameKey}</h3>
                     <span className="group-hover:text-accent mt-2 inline-flex items-center text-sm font-medium text-white/80 transition-colors">
-                      Explore Solutions
+                      {t("solutions.explore")}
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </span>
                   </div>
@@ -356,10 +342,10 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4">
             <div className="mb-12 text-center">
               <p className="text-muted-foreground text-sm font-medium tracking-widest uppercase">
-                Trusted Partners
+                {t("brands.eyebrow")}
               </p>
               <h2 className="font-display text-foreground mt-2 text-3xl font-bold">
-                World-Leading Brands
+                {t("brands.title")}
               </h2>
             </div>
 
@@ -367,7 +353,7 @@ export default function HomePage() {
               {brands.map((brand) => (
                 <Link
                   key={brand.name}
-                  href={`/brands/${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`/${locale}/brands/${brand.name.toLowerCase().replace(/\s+/g, "-")}`}
                   className="flex items-center justify-center p-4 opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
                 >
                   <Image
@@ -383,10 +369,10 @@ export default function HomePage() {
 
             <div className="mt-12 text-center">
               <Link
-                href="/brands"
+                href={`/${locale}/brands`}
                 className="text-foreground hover:text-accent inline-flex items-center gap-2 text-sm font-medium transition-colors"
               >
-                View All Brands
+                {t("brands.viewAll")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -397,11 +383,10 @@ export default function HomePage() {
         <section className="bg-primary text-primary-foreground py-20">
           <div className="mx-auto max-w-7xl px-4 text-center">
             <h2 className="font-display text-3xl font-bold text-balance md:text-4xl">
-              Ready to Equip Your Kitchen?
+              {t("cta.title")}
             </h2>
             <p className="text-primary-foreground/80 mx-auto mt-4 max-w-2xl text-lg">
-              Our team of experts is ready to help you find the perfect equipment for your
-              commercial kitchen. Get in touch for a personalized consultation.
+              {t("cta.description")}
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button
@@ -409,8 +394,8 @@ export default function HomePage() {
                 className="bg-accent text-accent-foreground hover:bg-accent/90"
                 asChild
               >
-                <Link href="/contact">
-                  Request a Quote
+                <Link href={`/${locale}/contact`}>
+                  {t("cta.requestQuote")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -420,7 +405,7 @@ export default function HomePage() {
                 className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
                 asChild
               >
-                <Link href="/blog">Read Buying Guides</Link>
+                <Link href={`/${locale}/blog`}>{t("cta.buyingGuides")}</Link>
               </Button>
             </div>
           </div>
