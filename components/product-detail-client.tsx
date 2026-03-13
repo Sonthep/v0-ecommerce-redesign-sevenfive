@@ -118,7 +118,7 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
         </Link>
 
         {/* Name */}
-        <h1 className="text-foreground mt-2 text-2xl font-bold text-balance md:text-3xl">
+        <h1 className="text-foreground font-display mt-2 text-2xl font-bold text-balance md:text-3xl">
           {product.name}
         </h1>
 

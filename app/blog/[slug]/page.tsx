@@ -129,7 +129,7 @@ export async function generateMetadata({
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  await params
+  const { slug: _slug } = await params
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />

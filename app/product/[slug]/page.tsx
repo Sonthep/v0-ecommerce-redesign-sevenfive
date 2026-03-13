@@ -126,7 +126,7 @@ export async function generateMetadata({
 
 // Server Component — no "use client" needed here
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  await params
+  const { slug: _slug } = await params
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)

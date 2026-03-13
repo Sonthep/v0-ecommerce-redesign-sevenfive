@@ -133,7 +133,7 @@ export default async function SolutionDetailPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  await params
+  const { slug: _slug } = await params
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -175,8 +175,8 @@ export default async function SolutionDetailPage({
           <div className="mx-auto max-w-7xl px-4">
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <div>
-                <h2 className="text-foreground text-2xl font-bold md:text-3xl">
-                  Tailored Solutions for Your Restaurant
+                <h2 className="text-foreground font-display text-2xl font-bold md:text-3xl">
+                  Tailored Solutions for {solutionData.name}
                 </h2>
                 <p className="text-muted-foreground mt-4 leading-relaxed">
                   {solutionData.description}
