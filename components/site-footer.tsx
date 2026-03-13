@@ -34,7 +34,7 @@ const footerLinks = {
 
 export function SiteFooter() {
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground pb-20">
       {/* Main Footer */}
       <div className="mx-auto max-w-7xl px-4 py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-6">

@@ -14,11 +14,13 @@ import {
   RotateCcw,
   CheckCircle2,
   Star,
+  GitCompareArrows,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { ProductCard } from "@/components/product-card"
+import { useComparison, type CompareProduct } from "@/contexts/comparison-context"
 import { cn } from "@/lib/utils"
 
 // Mock product data
@@ -116,6 +118,28 @@ export default function ProductDetailPage() {
   const [activeTab, setActiveTab] = React.useState<"description" | "specifications" | "reviews">(
     "description"
   )
+  const { addToCompare, removeFromCompare, isInCompare, maxItems, compareList } = useComparison()
+  
+  const inCompare = isInCompare(product.id)
+  const canAddMore = compareList.length < maxItems
+
+  const handleCompareClick = () => {
+    if (inCompare) {
+      removeFromCompare(product.id)
+    } else if (canAddMore) {
+      const compareProduct: CompareProduct = {
+        id: product.id,
+        name: product.name,
+        brand: product.brand,
+        price: product.price,
+        originalPrice: product.originalPrice,
+        image: product.images[0],
+        slug: "rational-icombi-pro-10-1-1",
+        category: product.category,
+      }
+      addToCompare(compareProduct)
+    }
+  }
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -296,6 +320,18 @@ export default function ProductDetailPage() {
                       <Share2 className="h-5 w-5" />
                       <span className="sr-only">Share</span>
                     </button>
+                  </Button>
+                  <Button 
+                    size="lg" 
+                    variant={inCompare ? "default" : "outline"} 
+                    className="w-12"
+                    onClick={handleCompareClick}
+                    disabled={!canAddMore && !inCompare}
+                  >
+                    <GitCompareArrows className="h-5 w-5" />
+                    <span className="sr-only">
+                      {inCompare ? "Remove from compare" : "Add to compare"}
+                    </span>
                   </Button>
                 </div>
 

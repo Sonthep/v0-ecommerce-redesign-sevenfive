@@ -2,28 +2,36 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Heart } from "lucide-react"
+import { Heart, GitCompareArrows } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
+import { useComparison, type CompareProduct } from "@/contexts/comparison-context"
 
-interface ProductCardProps {
-  product: {
-    id: string
-    name: string
-    brand: string
-    price: number
-    originalPrice?: number
-    image: string
-    slug: string
-    category: string
-    isNew?: boolean
-    isBestSeller?: boolean
-  }
-  variant?: "default" | "compact"
+export interface ProductCardProduct {
+  id: string
+  name: string
+  brand: string
+  price: number
+  originalPrice?: number
+  image: string
+  slug: string
+  category: string
+  isNew?: boolean
+  isBestSeller?: boolean
 }
 
-export function ProductCard({ product, variant = "default" }: ProductCardProps) {
+interface ProductCardProps {
+  product: ProductCardProduct
+  variant?: "default" | "compact"
+  showCompare?: boolean
+}
+
+export function ProductCard({ product, variant = "default", showCompare = true }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false)
+  const { addToCompare, removeFromCompare, isInCompare, maxItems, compareList } = useComparison()
+  
+  const inCompare = isInCompare(product.id)
+  const canAddMore = compareList.length < maxItems
   
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -33,6 +41,26 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
     e.preventDefault()
     e.stopPropagation()
     setIsWishlisted(!isWishlisted)
+  }
+
+  const handleCompareClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (inCompare) {
+      removeFromCompare(product.id)
+    } else if (canAddMore) {
+      const compareProduct: CompareProduct = {
+        id: product.id,
+        name: product.name,
+        brand: product.brand,
+        price: product.price,
+        originalPrice: product.originalPrice,
+        image: product.image,
+        slug: product.slug,
+        category: product.category,
+      }
+      addToCompare(compareProduct)
+    }
   }
 
   return (
@@ -90,6 +118,26 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             <Heart className={cn("h-4 w-4", isWishlisted && "fill-current")} />
             <span className="sr-only">Add to wishlist</span>
           </button>
+          
+          {showCompare && (
+            <button
+              type="button"
+              className={cn(
+                "flex h-8 w-8 items-center justify-center rounded-full shadow-md transition-colors",
+                inCompare 
+                  ? "bg-foreground text-background" 
+                  : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+                !canAddMore && !inCompare && "opacity-50 cursor-not-allowed"
+              )}
+              onClick={handleCompareClick}
+              disabled={!canAddMore && !inCompare}
+            >
+              <GitCompareArrows className="h-4 w-4" />
+              <span className="sr-only">
+                {inCompare ? "Remove from compare" : "Add to compare"}
+              </span>
+            </button>
+          )}
         </div>
       </div>
 
