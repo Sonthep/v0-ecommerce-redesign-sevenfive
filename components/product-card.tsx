@@ -3,8 +3,8 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Heart } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useState } from "react"
 
 interface ProductCardProps {
   product: {
@@ -23,9 +23,17 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, variant = "default" }: ProductCardProps) {
+  const [isWishlisted, setIsWishlisted] = useState(false)
+  
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : null
+
+  const handleWishlistClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsWishlisted(!isWishlisted)
+  }
 
   return (
     <Link
@@ -69,18 +77,19 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
 
         {/* Quick Actions */}
         <div className="absolute right-3 top-3 flex flex-col gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-          <Button
-            variant="secondary"
-            size="icon"
-            className="h-8 w-8 rounded-full shadow-md"
-            onClick={(e) => {
-              e.preventDefault()
-              // Add to wishlist
-            }}
+          <button
+            type="button"
+            className={cn(
+              "flex h-8 w-8 items-center justify-center rounded-full shadow-md transition-colors",
+              isWishlisted 
+                ? "bg-accent text-accent-foreground" 
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            )}
+            onClick={handleWishlistClick}
           >
-            <Heart className="h-4 w-4" />
+            <Heart className={cn("h-4 w-4", isWishlisted && "fill-current")} />
             <span className="sr-only">Add to wishlist</span>
-          </Button>
+          </button>
         </div>
       </div>
 

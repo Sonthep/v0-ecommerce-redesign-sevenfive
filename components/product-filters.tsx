@@ -125,7 +125,7 @@ export function ProductFilters({
                     <input
                       type="checkbox"
                       className="sr-only"
-                      checked={isActive}
+                      checked={isActive ?? false}
                       onChange={() => onFilterChange(group.name, option.value)}
                     />
                     <span className="flex-1 text-sm text-muted-foreground group-hover:text-foreground transition-colors">
