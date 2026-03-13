@@ -14,55 +14,55 @@ import { cn } from "@/lib/utils"
 const productSpecs: Record<string, Record<string, string | boolean>> = {
   "1": {
     "Power Source": "Electric",
-    "Capacity": "10 x 1/1 GN",
+    Capacity: "10 x 1/1 GN",
     "Power Rating": "18.4 kW",
     "Dimensions (WxDxH)": "847 x 771 x 1042 mm",
-    "Weight": "138 kg",
+    Weight: "138 kg",
     "Temperature Range": "30-300°C",
     "Humidity Control": true,
     "Self-Cleaning": true,
     "Digital Display": true,
     "WiFi Connected": true,
-    "Warranty": "2 Years",
+    Warranty: "2 Years",
   },
   "2": {
     "Power Source": "Gas",
-    "Capacity": "6 Burners + Oven",
+    Capacity: "6 Burners + Oven",
     "Power Rating": "44 kW",
     "Dimensions (WxDxH)": "1200 x 900 x 850 mm",
-    "Weight": "245 kg",
+    Weight: "245 kg",
     "Temperature Range": "100-300°C",
     "Humidity Control": false,
     "Self-Cleaning": false,
     "Digital Display": false,
     "WiFi Connected": false,
-    "Warranty": "1 Year",
+    Warranty: "1 Year",
   },
   "3": {
     "Power Source": "Gas",
-    "Capacity": "36 inch Griddle",
+    Capacity: "36 inch Griddle",
     "Power Rating": "24 kW",
     "Dimensions (WxDxH)": "914 x 635 x 400 mm",
-    "Weight": "95 kg",
+    Weight: "95 kg",
     "Temperature Range": "150-250°C",
     "Humidity Control": false,
     "Self-Cleaning": false,
     "Digital Display": false,
     "WiFi Connected": false,
-    "Warranty": "1 Year",
+    Warranty: "1 Year",
   },
   "4": {
     "Power Source": "Electric",
-    "Capacity": "5 x 1/1 GN",
+    Capacity: "5 x 1/1 GN",
     "Power Rating": "11 kW",
     "Dimensions (WxDxH)": "965 x 857 x 1570 mm",
-    "Weight": "145 kg",
+    Weight: "145 kg",
     "Temperature Range": "65-260°C",
     "Humidity Control": true,
     "Self-Cleaning": false,
     "Digital Display": true,
     "WiFi Connected": false,
-    "Warranty": "2 Years",
+    Warranty: "2 Years",
   },
 }
 
@@ -89,6 +89,8 @@ const specCategories = [
   },
 ]
 
+// This page uses useComparison (client context) so it must be a Client Component.
+// The comparison context itself is already wrapped properly in layout via ComparisonProvider.
 export default function ComparePage() {
   const { compareList, removeFromCompare, clearCompare } = useComparison()
 
@@ -96,19 +98,15 @@ export default function ComparePage() {
     return (
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
-        <main className="flex-1 flex items-center justify-center">
-          <div className="text-center px-4">
-            <h1 className="text-2xl font-bold text-foreground mb-4">
-              No Products to Compare
-            </h1>
+        <main className="flex flex-1 items-center justify-center">
+          <div className="px-4 text-center">
+            <h1 className="text-foreground mb-4 text-2xl font-bold">No Products to Compare</h1>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Add products to your comparison list from the category or product pages
-              to see them side by side.
+              Add products to your comparison list from the category or product pages to see them
+              side by side.
             </p>
             <Button asChild>
-              <Link href="/category/cooking-equipment">
-                Browse Products
-              </Link>
+              <Link href="/category/cooking-equipment">Browse Products</Link>
             </Button>
           </div>
         </main>
@@ -124,21 +122,17 @@ export default function ComparePage() {
       <main className="flex-1 py-8">
         <div className="mx-auto max-w-7xl px-4">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="mb-8 flex items-center justify-between">
             <div>
               <Link
                 href="/category/cooking-equipment"
-                className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-2"
+                className="text-muted-foreground hover:text-foreground mb-2 inline-flex items-center text-sm transition-colors"
               >
-                <ArrowLeft className="h-4 w-4 mr-1" />
+                <ArrowLeft className="mr-1 h-4 w-4" />
                 Back to products
               </Link>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-                Compare Products
-              </h1>
-              <p className="mt-1 text-muted-foreground">
-                Comparing {compareList.length} products
-              </p>
+              <h1 className="text-foreground text-2xl font-bold md:text-3xl">Compare Products</h1>
+              <p className="text-muted-foreground mt-1">Comparing {compareList.length} products</p>
             </div>
             <Button variant="outline" onClick={clearCompare}>
               Clear All
@@ -151,23 +145,23 @@ export default function ComparePage() {
               {/* Product Header */}
               <thead>
                 <tr>
-                  <th className="sticky left-0 z-10 w-48 bg-background p-4 text-left align-bottom border-b border-border">
+                  <th className="bg-background border-border sticky left-0 z-10 w-48 border-b p-4 text-left align-bottom">
                     <span className="sr-only">Specification</span>
                   </th>
                   {compareList.map((product) => (
                     <th
                       key={product.id}
-                      className="min-w-[200px] border-b border-border bg-card p-4 text-left align-bottom"
+                      className="border-border bg-card min-w-[200px] border-b p-4 text-left align-bottom"
                     >
                       <div className="relative">
                         <button
                           onClick={() => removeFromCompare(product.id)}
-                          className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground hover:bg-foreground hover:text-background transition-colors"
+                          className="bg-muted text-muted-foreground hover:bg-foreground hover:text-background absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full transition-colors"
                         >
                           <X className="h-3.5 w-3.5" />
                           <span className="sr-only">Remove</span>
                         </button>
-                        <div className="relative aspect-square w-full max-w-[180px] overflow-hidden rounded-lg bg-muted mb-4">
+                        <div className="bg-muted relative mb-4 aspect-square w-full max-w-[180px] overflow-hidden rounded-lg">
                           <Image
                             src={product.image}
                             alt={product.name}
@@ -175,14 +169,14 @@ export default function ComparePage() {
                             className="object-cover"
                           />
                         </div>
-                        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-1">
+                        <p className="text-muted-foreground mb-1 text-xs font-medium tracking-wider uppercase">
                           {product.brand}
                         </p>
-                        <h3 className="font-semibold text-foreground line-clamp-2 mb-2">
+                        <h3 className="text-foreground mb-2 line-clamp-2 font-semibold">
                           {product.name}
                         </h3>
                         <div className="flex items-baseline gap-2">
-                          <span className="text-lg font-bold text-foreground">
+                          <span className="text-foreground text-lg font-bold">
                             {new Intl.NumberFormat("th-TH", {
                               style: "currency",
                               currency: "THB",
@@ -190,7 +184,7 @@ export default function ComparePage() {
                             }).format(product.price)}
                           </span>
                           {product.originalPrice && (
-                            <span className="text-sm text-muted-foreground line-through">
+                            <span className="text-muted-foreground text-sm line-through">
                               {new Intl.NumberFormat("th-TH", {
                                 style: "currency",
                                 currency: "THB",
@@ -199,10 +193,8 @@ export default function ComparePage() {
                             </span>
                           )}
                         </div>
-                        <Button asChild size="sm" className="w-full mt-4">
-                          <Link href={`/product/${product.slug}`}>
-                            View Details
-                          </Link>
+                        <Button asChild size="sm" className="mt-4 w-full">
+                          <Link href={`/product/${product.slug}`}>View Details</Link>
                         </Button>
                       </div>
                     </th>
@@ -218,7 +210,7 @@ export default function ComparePage() {
                     <tr>
                       <td
                         colSpan={compareList.length + 1}
-                        className="bg-muted px-4 py-3 font-semibold text-foreground border-b border-border"
+                        className="bg-muted text-foreground border-border border-b px-4 py-3 font-semibold"
                       >
                         {category.name}
                       </td>
@@ -227,7 +219,7 @@ export default function ComparePage() {
                     {/* Specs */}
                     {category.specs.map((spec) => (
                       <tr key={spec} className="group">
-                        <td className="sticky left-0 z-10 bg-background px-4 py-3 text-sm font-medium text-foreground border-b border-border group-hover:bg-secondary/50">
+                        <td className="bg-background text-foreground border-border group-hover:bg-secondary/50 sticky left-0 z-10 border-b px-4 py-3 text-sm font-medium">
                           {spec}
                         </td>
                         {compareList.map((product) => {
@@ -235,18 +227,20 @@ export default function ComparePage() {
                           return (
                             <td
                               key={`${product.id}-${spec}`}
-                              className="px-4 py-3 text-sm border-b border-border group-hover:bg-secondary/50"
+                              className="border-border group-hover:bg-secondary/50 border-b px-4 py-3 text-sm"
                             >
                               {typeof value === "boolean" ? (
                                 value ? (
                                   <Check className="h-5 w-5 text-green-600" />
                                 ) : (
-                                  <Minus className="h-5 w-5 text-muted-foreground" />
+                                  <Minus className="text-muted-foreground h-5 w-5" />
                                 )
                               ) : (
-                                <span className={cn(
-                                  value ? "text-foreground" : "text-muted-foreground"
-                                )}>
+                                <span
+                                  className={cn(
+                                    value ? "text-foreground" : "text-muted-foreground"
+                                  )}
+                                >
                                   {value || "—"}
                                 </span>
                               )}
@@ -262,7 +256,7 @@ export default function ComparePage() {
           </div>
 
           {/* Mobile Hint */}
-          <p className="mt-4 text-center text-sm text-muted-foreground md:hidden">
+          <p className="text-muted-foreground mt-4 text-center text-sm md:hidden">
             Scroll horizontally to see all products
           </p>
         </div>

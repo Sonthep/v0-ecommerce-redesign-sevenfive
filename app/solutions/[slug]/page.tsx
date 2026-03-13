@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, ArrowRight, CheckCircle2, Phone, Mail } from "lucide-react"
@@ -100,14 +101,46 @@ const recommendedProducts = [
   },
 ]
 
-export default function SolutionDetailPage() {
+export async function generateStaticParams() {
+  return [
+    { slug: "restaurant" },
+    { slug: "hotel" },
+    { slug: "cafe" },
+    { slug: "catering" },
+    { slug: "bakery" },
+  ]
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  await params
+  return {
+    title: `${solutionData.name} | SevenFive`,
+    description: solutionData.description,
+    openGraph: {
+      title: solutionData.name,
+      description: solutionData.description,
+      images: [solutionData.image],
+    },
+  }
+}
+
+export default async function SolutionDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  await params
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative h-80 md:h-96 overflow-hidden">
+        <section className="relative h-80 overflow-hidden md:h-96">
           <Image
             src={solutionData.image}
             alt={solutionData.name}
@@ -118,23 +151,19 @@ export default function SolutionDetailPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
           <div className="absolute inset-0 flex flex-col justify-end">
             <div className="mx-auto w-full max-w-7xl px-4 pb-12">
-              <nav className="flex items-center gap-2 text-sm text-white/60 mb-4">
-                <Link href="/" className="hover:text-white transition-colors">
+              <nav className="mb-4 flex items-center gap-2 text-sm text-white/60">
+                <Link href="/" className="transition-colors hover:text-white">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/solutions" className="hover:text-white transition-colors">
+                <Link href="/solutions" className="transition-colors hover:text-white">
                   Solutions
                 </Link>
                 <ChevronRight className="h-4 w-4" />
                 <span className="text-white">{solutionData.name}</span>
               </nav>
-              <h1 className="text-3xl md:text-4xl font-bold text-white">
-                {solutionData.name}
-              </h1>
-              <p className="mt-2 text-lg text-white/80 max-w-2xl">
-                {solutionData.tagline}
-              </p>
+              <h1 className="text-3xl font-bold text-white md:text-4xl">{solutionData.name}</h1>
+              <p className="mt-2 max-w-2xl text-lg text-white/80">{solutionData.tagline}</p>
             </div>
           </div>
         </section>
@@ -142,12 +171,12 @@ export default function SolutionDetailPage() {
         {/* Introduction */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="grid gap-12 lg:grid-cols-2 items-center">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
               <div>
-                <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+                <h2 className="text-foreground text-2xl font-bold md:text-3xl">
                   Tailored Solutions for Your Restaurant
                 </h2>
-                <p className="mt-4 text-muted-foreground leading-relaxed">
+                <p className="text-muted-foreground mt-4 leading-relaxed">
                   {solutionData.description}
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -167,12 +196,12 @@ export default function SolutionDetailPage() {
                   <Link
                     key={cat.name}
                     href={cat.href}
-                    className="group rounded-xl border border-border bg-card p-6 transition-all hover:shadow-md hover:border-foreground/20"
+                    className="group border-border bg-card hover:border-foreground/20 rounded-xl border p-6 transition-all hover:shadow-md"
                   >
-                    <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors">
+                    <h3 className="text-foreground group-hover:text-accent font-semibold transition-colors">
                       {cat.name}
                     </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{cat.count} products</p>
+                    <p className="text-muted-foreground mt-1 text-sm">{cat.count} products</p>
                   </Link>
                 ))}
               </div>
@@ -183,17 +212,17 @@ export default function SolutionDetailPage() {
         {/* Features */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-2xl font-bold text-foreground text-center md:text-3xl">
+            <h2 className="text-foreground text-center text-2xl font-bold md:text-3xl">
               What We Offer
             </h2>
             <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {solutionData.features.map((feature, index) => (
                 <div key={feature.title} className="relative">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-sm">
+                  <div className="bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-lg text-sm font-bold">
                     0{index + 1}
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold text-foreground">{feature.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-foreground mt-4 text-lg font-semibold">{feature.title}</h3>
+                  <p className="text-muted-foreground mt-2 text-sm">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -203,16 +232,16 @@ export default function SolutionDetailPage() {
         {/* Recommended Products */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="flex items-end justify-between mb-8">
+            <div className="mb-8 flex items-end justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Recommended Equipment</h2>
-                <p className="mt-2 text-muted-foreground">
+                <h2 className="text-foreground text-2xl font-bold">Recommended Equipment</h2>
+                <p className="text-muted-foreground mt-2">
                   Popular choices for restaurant kitchens
                 </p>
               </div>
               <Link
                 href="/category"
-                className="hidden sm:flex items-center gap-2 text-sm font-medium text-foreground hover:text-accent transition-colors"
+                className="text-foreground hover:text-accent hidden items-center gap-2 text-sm font-medium transition-colors sm:flex"
               >
                 View All
                 <ArrowRight className="h-4 w-4" />
@@ -229,31 +258,28 @@ export default function SolutionDetailPage() {
         {/* Case Studies */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-2xl font-bold text-foreground text-center md:text-3xl">
+            <h2 className="text-foreground text-center text-2xl font-bold md:text-3xl">
               Success Stories
             </h2>
-            <p className="mt-2 text-muted-foreground text-center">
+            <p className="text-muted-foreground mt-2 text-center">
               See how we&apos;ve helped restaurants like yours
             </p>
             <div className="mt-12 grid gap-8 md:grid-cols-2">
               {solutionData.caseStudies.map((study) => (
-                <div
-                  key={study.name}
-                  className="rounded-xl border border-border bg-card p-8"
-                >
+                <div key={study.name} className="border-border bg-card rounded-xl border p-8">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold text-foreground">{study.name}</h3>
-                      <p className="text-sm text-muted-foreground">{study.location}</p>
+                      <h3 className="text-foreground text-lg font-semibold">{study.name}</h3>
+                      <p className="text-muted-foreground text-sm">{study.location}</p>
                     </div>
                   </div>
-                  <p className="mt-4 text-muted-foreground">{study.description}</p>
+                  <p className="text-muted-foreground mt-4">{study.description}</p>
                   <div className="mt-6">
-                    <h4 className="text-sm font-medium text-foreground">Results:</h4>
+                    <h4 className="text-foreground text-sm font-medium">Results:</h4>
                     <ul className="mt-2 space-y-2">
                       {study.results.map((result) => (
                         <li key={result} className="flex items-center gap-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-accent shrink-0" />
+                          <CheckCircle2 className="text-accent h-4 w-4 shrink-0" />
                           <span className="text-muted-foreground">{result}</span>
                         </li>
                       ))}
@@ -268,15 +294,13 @@ export default function SolutionDetailPage() {
         {/* Contact CTA */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="rounded-2xl bg-primary p-8 md:p-12 text-primary-foreground">
-              <div className="grid gap-8 lg:grid-cols-2 items-center">
+            <div className="bg-primary text-primary-foreground rounded-2xl p-8 md:p-12">
+              <div className="grid items-center gap-8 lg:grid-cols-2">
                 <div>
-                  <h2 className="text-2xl font-bold md:text-3xl">
-                    Ready to Discuss Your Project?
-                  </h2>
-                  <p className="mt-4 text-primary-foreground/80">
-                    Our restaurant specialists are ready to help you design the perfect kitchen. 
-                    Get a free consultation and quote today.
+                  <h2 className="text-2xl font-bold md:text-3xl">Ready to Discuss Your Project?</h2>
+                  <p className="text-primary-foreground/80 mt-4">
+                    Our restaurant specialists are ready to help you design the perfect kitchen. Get
+                    a free consultation and quote today.
                   </p>
                   <div className="mt-8 flex flex-wrap gap-4">
                     <Button
@@ -292,18 +316,20 @@ export default function SolutionDetailPage() {
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <div className="flex items-center gap-4 rounded-lg bg-sidebar-accent p-4">
-                    <Phone className="h-5 w-5 text-accent" />
+                  <div className="bg-sidebar-accent flex items-center gap-4 rounded-lg p-4">
+                    <Phone className="text-accent h-5 w-5" />
                     <div>
                       <p className="font-medium">Call Us</p>
-                      <p className="text-sm text-primary-foreground/70">+66 2 123 4567</p>
+                      <p className="text-primary-foreground/70 text-sm">+66 2 123 4567</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 rounded-lg bg-sidebar-accent p-4">
-                    <Mail className="h-5 w-5 text-accent" />
+                  <div className="bg-sidebar-accent flex items-center gap-4 rounded-lg p-4">
+                    <Mail className="text-accent h-5 w-5" />
                     <div>
                       <p className="font-medium">Email Us</p>
-                      <p className="text-sm text-primary-foreground/70">solutions@sevenfive.co.th</p>
+                      <p className="text-primary-foreground/70 text-sm">
+                        solutions@sevenfive.co.th
+                      </p>
                     </div>
                   </div>
                 </div>

@@ -1,0 +1,16 @@
+# SevenFive – Code Owners
+# Each line: <path pattern> <@github-username or @org/team>
+# Owners are automatically added as PR reviewers.
+
+# Global fallback — all files
+* @sevenfive-dev/frontend
+
+# Core app logic
+/app/               @sevenfive-dev/frontend
+/components/        @sevenfive-dev/frontend
+/lib/               @sevenfive-dev/frontend
+/contexts/          @sevenfive-dev/frontend
+
+# CI/CD & infrastructure
+/.github/           @sevenfive-dev/devops
+/next.config.mjs    @sevenfive-dev/devops

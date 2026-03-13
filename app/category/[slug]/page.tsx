@@ -1,20 +1,16 @@
-"use client"
-
-import * as React from "react"
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronRight, Grid3X3, List, SlidersHorizontal, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ChevronRight } from "lucide-react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { ProductCard } from "@/components/product-card"
-import { ProductFilters } from "@/components/product-filters"
-import { cn } from "@/lib/utils"
+import { CategoryProductsClient } from "@/components/category-products-client"
 
-// Mock data - in production this would come from an API/database
+// Mock data — replace with real DB/API calls per slug
 const categoryData = {
   name: "Cooking Equipment",
-  description: "Professional cooking equipment for commercial kitchens. From ranges and ovens to fryers and steamers, we have everything you need.",
+  description:
+    "Professional cooking equipment for commercial kitchens. From ranges and ovens to fryers and steamers, we have everything you need.",
   image: "/images/categories/cooking.jpg",
   subcategories: [
     { name: "Ranges & Ovens", slug: "ranges-ovens", count: 156 },
@@ -137,39 +133,33 @@ const products = [
   },
 ]
 
-const sortOptions = [
-  { value: "featured", label: "Featured" },
-  { value: "newest", label: "Newest" },
-  { value: "price-low", label: "Price: Low to High" },
-  { value: "price-high", label: "Price: High to Low" },
-  { value: "best-selling", label: "Best Selling" },
-]
+// Pre-render known category slugs at build time
+export async function generateStaticParams() {
+  return [
+    { slug: "cooking-equipment" },
+    { slug: "refrigeration" },
+    { slug: "food-preparation" },
+    { slug: "beverage" },
+    { slug: "warewashing" },
+    { slug: "storage" },
+  ]
+}
 
-export default function CategoryPage() {
-  const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid")
-  const [sortBy, setSortBy] = React.useState("featured")
-  const [mobileFiltersOpen, setMobileFiltersOpen] = React.useState(false)
-  const [activeFilters, setActiveFilters] = React.useState<Record<string, string[]>>({})
-
-  const handleFilterChange = (group: string, value: string) => {
-    setActiveFilters((prev) => {
-      const current = prev[group] || []
-      const newValues = current.includes(value)
-        ? current.filter((v) => v !== value)
-        : [...current, value]
-      
-      if (newValues.length === 0) {
-        const { [group]: _, ...rest } = prev
-        return rest
-      }
-      
-      return { ...prev, [group]: newValues }
-    })
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug: _slug } = await params
+  return {
+    title: `${categoryData.name} | SevenFive`,
+    description: categoryData.description,
   }
+}
 
-  const handleClearFilters = () => {
-    setActiveFilters({})
-  }
+// Server Component — no "use client" here
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -177,7 +167,7 @@ export default function CategoryPage() {
 
       <main className="flex-1">
         {/* Category Header */}
-        <section className="relative h-64 md:h-80 overflow-hidden">
+        <section className="relative h-64 overflow-hidden md:h-80">
           <Image
             src={categoryData.image}
             alt={categoryData.name}
@@ -189,199 +179,47 @@ export default function CategoryPage() {
           <div className="absolute inset-0 flex flex-col justify-end">
             <div className="mx-auto w-full max-w-7xl px-4 pb-8">
               {/* Breadcrumb */}
-              <nav className="flex items-center gap-2 text-sm text-white/70 mb-4">
-                <Link href="/" className="hover:text-white transition-colors">
+              <nav className="mb-4 flex items-center gap-2 text-sm text-white/70">
+                <Link href="/" className="transition-colors hover:text-white">
                   Home
                 </Link>
                 <ChevronRight className="h-4 w-4" />
-                <Link href="/category" className="hover:text-white transition-colors">
+                <Link href="/category" className="transition-colors hover:text-white">
                   Categories
                 </Link>
                 <ChevronRight className="h-4 w-4" />
                 <span className="text-white">{categoryData.name}</span>
               </nav>
-              <h1 className="text-3xl md:text-4xl font-bold text-white">
-                {categoryData.name}
-              </h1>
-              <p className="mt-2 text-white/80 max-w-2xl">
-                {categoryData.description}
-              </p>
+              <h1 className="text-3xl font-bold text-white md:text-4xl">{categoryData.name}</h1>
+              <p className="mt-2 max-w-2xl text-white/80">{categoryData.description}</p>
             </div>
           </div>
         </section>
 
         {/* Subcategories */}
-        <section className="border-b border-border bg-card">
+        <section className="border-border bg-card border-b">
           <div className="mx-auto max-w-7xl px-4 py-6">
-            <div className="flex gap-3 overflow-x-auto pb-2 -mb-2 scrollbar-hide">
+            <div className="scrollbar-hide -mb-2 flex gap-3 overflow-x-auto pb-2">
               {categoryData.subcategories.map((sub) => (
                 <Link
                   key={sub.slug}
-                  href={`/category/cooking-equipment/${sub.slug}`}
-                  className="flex-shrink-0 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:border-foreground hover:bg-secondary transition-colors"
+                  href={`/category/${slug}/${sub.slug}`}
+                  className="border-border bg-background text-foreground hover:border-foreground hover:bg-secondary flex-shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors"
                 >
                   {sub.name}
-                  <span className="ml-2 text-muted-foreground">({sub.count})</span>
+                  <span className="text-muted-foreground ml-2">({sub.count})</span>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Products Section */}
+        {/* Products Section — interactive state lives in the Client Component */}
         <section className="py-8">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="lg:grid lg:grid-cols-4 lg:gap-8">
-              {/* Desktop Filters */}
-              <aside className="hidden lg:block">
-                <div className="sticky top-24">
-                  <h2 className="text-lg font-semibold text-foreground mb-6">Filters</h2>
-                  <ProductFilters
-                    filters={filters}
-                    activeFilters={activeFilters}
-                    onFilterChange={handleFilterChange}
-                    onClearFilters={handleClearFilters}
-                  />
-                </div>
-              </aside>
-
-              {/* Products */}
-              <div className="lg:col-span-3">
-                {/* Toolbar */}
-                <div className="flex items-center justify-between gap-4 mb-6">
-                  <div className="flex items-center gap-4">
-                    {/* Mobile Filter Toggle */}
-                    <Button
-                      variant="outline"
-                      className="lg:hidden"
-                      onClick={() => setMobileFiltersOpen(true)}
-                    >
-                      <SlidersHorizontal className="h-4 w-4 mr-2" />
-                      Filters
-                    </Button>
-
-                    <span className="text-sm text-muted-foreground">
-                      {products.length} products
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    {/* Sort */}
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-muted-foreground hidden sm:inline">
-                        Sort by:
-                      </span>
-                      <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                      >
-                        {sortOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* View Toggle */}
-                    <div className="hidden sm:flex items-center gap-1 border border-border rounded-md p-1">
-                      <button
-                        onClick={() => setViewMode("grid")}
-                        className={cn(
-                          "p-1.5 rounded transition-colors",
-                          viewMode === "grid"
-                            ? "bg-foreground text-background"
-                            : "text-muted-foreground hover:text-foreground"
-                        )}
-                      >
-                        <Grid3X3 className="h-4 w-4" />
-                        <span className="sr-only">Grid view</span>
-                      </button>
-                      <button
-                        onClick={() => setViewMode("list")}
-                        className={cn(
-                          "p-1.5 rounded transition-colors",
-                          viewMode === "list"
-                            ? "bg-foreground text-background"
-                            : "text-muted-foreground hover:text-foreground"
-                        )}
-                      >
-                        <List className="h-4 w-4" />
-                        <span className="sr-only">List view</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Product Grid */}
-                <div
-                  className={cn(
-                    "grid gap-6",
-                    viewMode === "grid"
-                      ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
-                      : "grid-cols-1"
-                  )}
-                >
-                  {products.map((product) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      variant={viewMode === "list" ? "compact" : "default"}
-                    />
-                  ))}
-                </div>
-
-                {/* Pagination */}
-                <div className="mt-12 flex items-center justify-center gap-2">
-                  <Button variant="outline" disabled>
-                    Previous
-                  </Button>
-                  {[1, 2, 3, 4, 5].map((page) => (
-                    <Button
-                      key={page}
-                      variant={page === 1 ? "default" : "outline"}
-                      size="icon"
-                    >
-                      {page}
-                    </Button>
-                  ))}
-                  <Button variant="outline">Next</Button>
-                </div>
-              </div>
-            </div>
+            <CategoryProductsClient filters={filters} products={products} />
           </div>
         </section>
-
-        {/* Mobile Filters Drawer */}
-        {mobileFiltersOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden">
-            <div
-              className="absolute inset-0 bg-black/50"
-              onClick={() => setMobileFiltersOpen(false)}
-            />
-            <div className="absolute inset-y-0 left-0 w-full max-w-xs bg-card shadow-xl">
-              <div className="flex items-center justify-between border-b border-border p-4">
-                <h2 className="text-lg font-semibold text-foreground">Filters</h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setMobileFiltersOpen(false)}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-              <div className="p-4 overflow-y-auto h-[calc(100%-73px)]">
-                <ProductFilters
-                  filters={filters}
-                  activeFilters={activeFilters}
-                  onFilterChange={handleFilterChange}
-                  onClearFilters={handleClearFilters}
-                />
-              </div>
-            </div>
-          </div>
-        )}
       </main>
 
       <SiteFooter />

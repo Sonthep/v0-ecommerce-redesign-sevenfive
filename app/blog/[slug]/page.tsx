@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, Clock, User, Share2, ArrowLeft, ArrowRight } from "lucide-react"
@@ -102,16 +103,42 @@ const relatedPosts = [
   },
 ]
 
-export default function BlogPostPage() {
+export async function generateStaticParams() {
+  return [
+    { slug: "choosing-commercial-combi-oven" },
+    { slug: "energy-efficiency-commercial-kitchen" },
+    { slug: "haccp-kitchen-equipment-requirements" },
+  ]
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  await params
+  return {
+    title: `${post.title} | SevenFive Blog`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
+    },
+  }
+}
+
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  await params
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
 
       <main className="flex-1">
         {/* Header */}
-        <section className="bg-secondary border-b border-border">
+        <section className="bg-secondary border-border border-b">
           <div className="mx-auto max-w-4xl px-4 py-8">
-            <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
+            <nav className="text-muted-foreground mb-6 flex items-center gap-2 text-sm">
               <Link href="/" className="hover:text-foreground transition-colors">
                 Home
               </Link>
@@ -127,12 +154,12 @@ export default function BlogPostPage() {
                 {post.category}
               </Link>
             </nav>
-            <span className="text-sm font-medium text-accent">{post.category}</span>
-            <h1 className="mt-2 text-3xl font-bold text-foreground md:text-4xl text-balance">
+            <span className="text-accent text-sm font-medium">{post.category}</span>
+            <h1 className="text-foreground mt-2 text-3xl font-bold text-balance md:text-4xl">
               {post.title}
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+            <p className="text-muted-foreground mt-4 text-lg">{post.excerpt}</p>
+            <div className="text-muted-foreground mt-6 flex flex-wrap items-center gap-6 text-sm">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
                 {post.author}
@@ -150,13 +177,7 @@ export default function BlogPostPage() {
         <section className="py-8">
           <div className="mx-auto max-w-4xl px-4">
             <div className="relative aspect-[2/1] overflow-hidden rounded-xl">
-              <Image
-                src={post.image}
-                alt={post.title}
-                fill
-                className="object-cover"
-                priority
-              />
+              <Image src={post.image} alt={post.title} fill className="object-cover" priority />
             </div>
           </div>
         </section>
@@ -166,7 +187,7 @@ export default function BlogPostPage() {
           <div className="mx-auto max-w-4xl px-4">
             <div className="grid gap-8 lg:grid-cols-12">
               {/* Share buttons (sticky sidebar) */}
-              <aside className="hidden lg:block lg:col-span-1">
+              <aside className="hidden lg:col-span-1 lg:block">
                 <div className="sticky top-24 flex flex-col gap-3">
                   <Button variant="outline" size="icon" className="rounded-full">
                     <Share2 className="h-4 w-4" />
@@ -178,16 +199,16 @@ export default function BlogPostPage() {
               {/* Article content */}
               <article className="lg:col-span-11">
                 <div
-                  className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-a:text-accent prose-a:no-underline hover:prose-a:underline"
+                  className="prose prose-lg prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-a:text-accent prose-a:no-underline hover:prose-a:underline max-w-none"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 
                 {/* Tags */}
-                <div className="mt-12 flex flex-wrap gap-2 border-t border-border pt-8">
+                <div className="border-border mt-12 flex flex-wrap gap-2 border-t pt-8">
                   {["Combi Ovens", "Buying Guide", "Kitchen Equipment", "Cooking"].map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-secondary px-3 py-1 text-sm text-secondary-foreground"
+                      className="bg-secondary text-secondary-foreground rounded-full px-3 py-1 text-sm"
                     >
                       {tag}
                     </span>
@@ -195,15 +216,15 @@ export default function BlogPostPage() {
                 </div>
 
                 {/* Author */}
-                <div className="mt-8 rounded-xl bg-secondary p-6">
+                <div className="bg-secondary mt-8 rounded-xl p-6">
                   <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
-                      <User className="h-6 w-6 text-muted-foreground" />
+                    <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-full">
+                      <User className="text-muted-foreground h-6 w-6" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">{post.author}</p>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Our team of kitchen equipment specialists with decades of combined 
+                      <p className="text-foreground font-semibold">{post.author}</p>
+                      <p className="text-muted-foreground mt-1 text-sm">
+                        Our team of kitchen equipment specialists with decades of combined
                         experience helping businesses find the right equipment.
                       </p>
                     </div>
@@ -211,28 +232,28 @@ export default function BlogPostPage() {
                 </div>
 
                 {/* Navigation */}
-                <div className="mt-12 grid gap-4 sm:grid-cols-2 border-t border-border pt-8">
+                <div className="border-border mt-12 grid gap-4 border-t pt-8 sm:grid-cols-2">
                   <Link
                     href="/blog"
-                    className="group flex items-center gap-3 rounded-lg border border-border p-4 hover:border-foreground/20 transition-colors"
+                    className="group border-border hover:border-foreground/20 flex items-center gap-3 rounded-lg border p-4 transition-colors"
                   >
-                    <ArrowLeft className="h-5 w-5 text-muted-foreground group-hover:-translate-x-1 transition-transform" />
+                    <ArrowLeft className="text-muted-foreground h-5 w-5 transition-transform group-hover:-translate-x-1" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Previous</p>
-                      <p className="text-sm font-medium text-foreground">Back to Blog</p>
+                      <p className="text-muted-foreground text-xs">Previous</p>
+                      <p className="text-foreground text-sm font-medium">Back to Blog</p>
                     </div>
                   </Link>
                   <Link
                     href="/blog/calculate-ice-machine-capacity"
-                    className="group flex items-center justify-between gap-3 rounded-lg border border-border p-4 hover:border-foreground/20 transition-colors"
+                    className="group border-border hover:border-foreground/20 flex items-center justify-between gap-3 rounded-lg border p-4 transition-colors"
                   >
                     <div className="text-right">
-                      <p className="text-xs text-muted-foreground">Next Article</p>
-                      <p className="text-sm font-medium text-foreground line-clamp-1">
+                      <p className="text-muted-foreground text-xs">Next Article</p>
+                      <p className="text-foreground line-clamp-1 text-sm font-medium">
                         How to Calculate Ice Machine Capacity
                       </p>
                     </div>
-                    <ArrowRight className="h-5 w-5 text-muted-foreground shrink-0 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="text-muted-foreground h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
               </article>
@@ -243,13 +264,13 @@ export default function BlogPostPage() {
         {/* Related Posts */}
         <section className="bg-secondary py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-2xl font-bold text-foreground">Related Articles</h2>
+            <h2 className="text-foreground text-2xl font-bold">Related Articles</h2>
             <div className="mt-8 grid gap-8 md:grid-cols-3">
               {relatedPosts.map((relatedPost) => (
                 <Link
                   key={relatedPost.slug}
                   href={`/blog/${relatedPost.slug}`}
-                  className="group overflow-hidden rounded-xl border border-border bg-card transition-all hover:shadow-lg hover:border-foreground/20"
+                  className="group border-border bg-card hover:border-foreground/20 overflow-hidden rounded-xl border transition-all hover:shadow-lg"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
@@ -260,10 +281,10 @@ export default function BlogPostPage() {
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="font-semibold text-foreground line-clamp-2 group-hover:text-accent transition-colors">
+                    <h3 className="text-foreground group-hover:text-accent line-clamp-2 font-semibold transition-colors">
                       {relatedPost.title}
                     </h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{relatedPost.date}</p>
+                    <p className="text-muted-foreground mt-2 text-sm">{relatedPost.date}</p>
                   </div>
                 </Link>
               ))}
@@ -274,22 +295,22 @@ export default function BlogPostPage() {
         {/* CTA */}
         <section className="py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <div className="rounded-2xl bg-primary p-8 md:p-12 text-center text-primary-foreground">
+            <div className="bg-primary text-primary-foreground rounded-2xl p-8 text-center md:p-12">
               <h2 className="text-2xl font-bold md:text-3xl">Ready to Choose Your Equipment?</h2>
-              <p className="mt-4 text-primary-foreground/80 max-w-xl mx-auto">
-                Our experts are here to help you find the perfect equipment for your kitchen. 
-                Get personalized recommendations and competitive pricing.
+              <p className="text-primary-foreground/80 mx-auto mt-4 max-w-xl">
+                Our experts are here to help you find the perfect equipment for your kitchen. Get
+                personalized recommendations and competitive pricing.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-medium text-accent-foreground hover:bg-accent/90 transition-colors"
+                  className="bg-accent text-accent-foreground hover:bg-accent/90 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium transition-colors"
                 >
                   Contact an Expert
                 </Link>
                 <Link
                   href="/category"
-                  className="inline-flex items-center justify-center rounded-md border border-primary-foreground/30 px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-foreground/10 transition-colors"
+                  className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 inline-flex items-center justify-center rounded-md border px-6 py-3 text-sm font-medium transition-colors"
                 >
                   Browse Products
                 </Link>

@@ -1,12 +1,106 @@
-# v0-ecommerce-redesign-sevenfive
+# SevenFive — Professional Kitchen Equipment
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+> Thailand's trusted partner for commercial kitchen equipment. 30,000+ products from world-leading brands.
 
-## Built with v0
+[![CI](https://github.com/your-org/v0-ecommerce-redesign-sevenfive/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/v0-ecommerce-redesign-sevenfive/actions/workflows/ci.yml)
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+## Tech Stack
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_isAEUklJnPwiz8kCSQsEkLQQftpv)
+- **Framework:** [Next.js 16](https://nextjs.org) (App Router, SSG/SSR)
+- **Language:** TypeScript 5
+- **Styling:** Tailwind CSS v4 + shadcn/ui
+- **Package Manager:** pnpm 10
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 22+
+- pnpm 10+
+
+### Setup
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/your-org/v0-ecommerce-redesign-sevenfive.git
+cd v0-ecommerce-redesign-sevenfive
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Copy environment variables
+cp .env.example .env.local
+# Fill in values in .env.local
+
+# 4. Start dev server
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Scripts
+
+| Command             | Description               |
+| ------------------- | ------------------------- |
+| `pnpm dev`          | Start development server  |
+| `pnpm build`        | Production build          |
+| `pnpm start`        | Start production server   |
+| `pnpm lint`         | Run ESLint                |
+| `pnpm lint:fix`     | Auto-fix ESLint errors    |
+| `pnpm format`       | Format code with Prettier |
+| `pnpm format:check` | Check formatting          |
+| `pnpm type-check`   | TypeScript type checking  |
+
+## Project Structure
+
+```
+app/                  # Next.js App Router pages
+  api/                # Route Handlers
+  (routes)/           # Page files
+components/
+  ui/                 # shadcn/ui base components
+  *.tsx               # Feature components
+contexts/             # React Context providers
+lib/                  # Utilities & shared helpers
+public/               # Static assets
+.github/
+  workflows/          # CI/CD (GitHub Actions)
+  ISSUE_TEMPLATE/     # Bug report & feature request templates
+```
+
+## Branch Strategy
+
+```
+main        ← production (protected, deploy on push)
+develop     ← staging integration branch
+feat/*      ← new features
+fix/*       ← bug fixes
+chore/*     ← maintenance
+```
+
+## Commit Convention
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: add product comparison page
+fix: correct price formatting for THB
+docs: update README setup steps
+refactor: extract ProductCard to separate file
+perf: lazy load below-fold images
+chore: upgrade next.js to 16.x
+```
+
+## Contributing
+
+1. Fork the repo & create a branch from `develop`
+2. Make changes & ensure `pnpm lint`, `pnpm type-check`, and `pnpm build` pass
+3. Open a Pull Request using the provided template
+4. Request review from at least one team member
+
+## License
+
+Private — © SevenFive Co., Ltd. All rights reserved.
 
 ## Getting Started
 
