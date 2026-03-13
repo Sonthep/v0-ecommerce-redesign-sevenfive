@@ -4,6 +4,7 @@ import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Heart, Minus, Plus, Share2, CheckCircle2, Star, GitCompareArrows } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { useComparison, type CompareProduct } from "@/contexts/comparison-context"
 import { cn } from "@/lib/utils"
@@ -43,6 +44,7 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
   const [activeTab, setActiveTab] = React.useState<"description" | "specifications" | "reviews">(
     "description"
   )
+  const t = useTranslations("product")
   const { addToCompare, removeFromCompare, isInCompare, maxItems, compareList } = useComparison()
 
   const inCompare = isInCompare(product.id)
@@ -138,7 +140,7 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
             ))}
           </div>
           <span className="text-muted-foreground text-sm">
-            {product.rating} ({product.reviewCount} reviews)
+            {product.rating} ({product.reviewCount} {t("reviews")})
           </span>
         </div>
 
@@ -171,11 +173,11 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
             <>
               <CheckCircle2 className="h-5 w-5 text-green-600" />
               <span className="text-sm font-medium text-green-600">
-                In Stock ({product.stockCount} available)
+                {t("inStock")} ({product.stockCount} {t("available")})
               </span>
             </>
           ) : (
-            <span className="text-destructive text-sm font-medium">Out of Stock</span>
+            <span className="text-destructive text-sm font-medium">{t("outOfStock")}</span>
           )}
         </div>
 
@@ -197,18 +199,18 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
             </button>
           </div>
           <Button size="lg" className="min-w-[200px] flex-1" disabled={!product.inStock}>
-            Add to Cart
+            {t("addToCart")}
           </Button>
           <Button size="lg" variant="outline" className="w-12" asChild>
             <button>
               <Heart className="h-5 w-5" />
-              <span className="sr-only">Add to wishlist</span>
+              <span className="sr-only">{t("addToWishlist")}</span>
             </button>
           </Button>
           <Button size="lg" variant="outline" className="w-12" asChild>
             <button>
               <Share2 className="h-5 w-5" />
-              <span className="sr-only">Share</span>
+              <span className="sr-only">{t("share")}</span>
             </button>
           </Button>
           <Button
@@ -219,7 +221,9 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
             disabled={!canAddMore && !inCompare}
           >
             <GitCompareArrows className="h-5 w-5" />
-            <span className="sr-only">{inCompare ? "Remove from compare" : "Add to compare"}</span>
+            <span className="sr-only">
+              {inCompare ? t("removeFromCompare") : t("addToCompare")}
+            </span>
           </Button>
         </div>
 
@@ -242,9 +246,9 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
               </svg>
             </div>
             <div>
-              <p className="text-foreground font-medium">Free Delivery</p>
+              <p className="text-foreground font-medium">{t("freeDelivery")}</p>
               <p className="text-muted-foreground text-sm">
-                Estimated delivery in {product.deliveryDays} business days
+                {t("deliveryDays", { days: product.deliveryDays })}
               </p>
             </div>
           </div>
@@ -265,7 +269,7 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
               </svg>
             </div>
             <div>
-              <p className="text-foreground font-medium">Warranty</p>
+              <p className="text-foreground font-medium">{t("warranty")}</p>
               <p className="text-muted-foreground text-sm">{product.warranty}</p>
             </div>
           </div>
@@ -286,24 +290,22 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
               </svg>
             </div>
             <div>
-              <p className="text-foreground font-medium">365 Days Support</p>
-              <p className="text-muted-foreground text-sm">24/7 after-sales service and support</p>
+              <p className="text-foreground font-medium">{t("support")}</p>
+              <p className="text-muted-foreground text-sm">{t("supportDesc")}</p>
             </div>
           </div>
         </div>
 
         {/* Quick Contact */}
         <div className="border-border mt-6 rounded-xl border p-6">
-          <p className="text-foreground font-medium">Need help with this product?</p>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Our experts are ready to assist you with specifications and installation.
-          </p>
+          <p className="text-foreground font-medium">{t("needHelp")}</p>
+          <p className="text-muted-foreground mt-1 text-sm">{t("needHelpDesc")}</p>
           <div className="mt-4 flex gap-3">
             <Button variant="outline" size="sm" asChild>
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/contact">{t("contactUs")}</Link>
             </Button>
             <Button variant="outline" size="sm" asChild>
-              <Link href="tel:+6621234567">Call: +66 2 123 4567</Link>
+              <Link href="tel:+6621234567">{t("call")}</Link>
             </Button>
           </div>
         </div>
@@ -324,7 +326,7 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
                   : "text-muted-foreground hover:text-foreground border-transparent"
               )}
             >
-              {tab}
+              {t(`tabs.${tab}`)}
               {tab === "reviews" && (
                 <span className="text-muted-foreground ml-2">({product.reviewCount})</span>
               )}
@@ -337,11 +339,11 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
           {activeTab === "description" && (
             <div className="grid gap-8 lg:grid-cols-2">
               <div>
-                <h3 className="text-foreground text-lg font-semibold">Product Description</h3>
+                <h3 className="text-foreground text-lg font-semibold">{t("productDescription")}</h3>
                 <p className="text-muted-foreground mt-4 leading-relaxed">{product.description}</p>
               </div>
               <div>
-                <h3 className="text-foreground text-lg font-semibold">Key Features</h3>
+                <h3 className="text-foreground text-lg font-semibold">{t("keyFeatures")}</h3>
                 <ul className="mt-4 space-y-3">
                   {product.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-3">
@@ -356,7 +358,7 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
 
           {activeTab === "specifications" && (
             <div className="max-w-2xl">
-              <h3 className="text-foreground text-lg font-semibold">Technical Specifications</h3>
+              <h3 className="text-foreground text-lg font-semibold">{t("technicalSpecs")}</h3>
               <div className="divide-border border-border mt-6 divide-y rounded-xl border">
                 {product.specifications.map((spec, index) => (
                   <div key={index} className="grid grid-cols-2 p-4">
@@ -371,8 +373,8 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
           {activeTab === "reviews" && (
             <div className="max-w-2xl">
               <div className="flex items-center justify-between">
-                <h3 className="text-foreground text-lg font-semibold">Customer Reviews</h3>
-                <Button>Write a Review</Button>
+                <h3 className="text-foreground text-lg font-semibold">{t("customerReviews")}</h3>
+                <Button>{t("writeReview")}</Button>
               </div>
               <div className="border-border mt-6 rounded-xl border p-8 text-center">
                 <div className="flex items-center justify-center gap-2">
@@ -391,7 +393,9 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
                     ))}
                   </div>
                 </div>
-                <p className="text-muted-foreground mt-2">Based on {product.reviewCount} reviews</p>
+                <p className="text-muted-foreground mt-2">
+                  {t("basedOnReviews", { count: product.reviewCount })}
+                </p>
               </div>
             </div>
           )}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
+import { getTranslations } from "next-intl/server"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { ProductCard } from "@/components/product-card"
@@ -110,7 +111,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string; locale: string }>
 }): Promise<Metadata> {
   await params
   return {
@@ -125,8 +126,13 @@ export async function generateMetadata({
 }
 
 // Server Component — no "use client" needed here
-export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug: _slug } = await params
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string; locale: string }>
+}) {
+  const { slug: _slug, locale } = await params
+  const t = await getTranslations({ locale, namespace: "product" })
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -141,16 +147,19 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <div className="bg-secondary border-border border-b">
           <div className="mx-auto max-w-7xl px-4 py-4">
             <nav className="text-muted-foreground flex items-center gap-2 text-sm">
-              <Link href="/" className="hover:text-foreground transition-colors">
-                Home
-              </Link>
-              <ChevronRight className="h-4 w-4" />
-              <Link href="/category" className="hover:text-foreground transition-colors">
-                Categories
+              <Link href={`/${locale}`} className="hover:text-foreground transition-colors">
+                {t("breadcrumbHome")}
               </Link>
               <ChevronRight className="h-4 w-4" />
               <Link
-                href={`/category/${product.categorySlug}`}
+                href={`/${locale}/category`}
+                className="hover:text-foreground transition-colors"
+              >
+                {t("breadcrumbCategories")}
+              </Link>
+              <ChevronRight className="h-4 w-4" />
+              <Link
+                href={`/${locale}/category/${product.categorySlug}`}
                 className="hover:text-foreground transition-colors"
               >
                 {product.category}
@@ -173,7 +182,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         {/* Related Products */}
         <section className="border-border bg-secondary border-t py-16">
           <div className="mx-auto max-w-7xl px-4">
-            <h2 className="text-foreground text-2xl font-bold">Related Products</h2>
+            <h2 className="text-foreground text-2xl font-bold">{t("relatedProducts")}</h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {relatedProducts.map((relatedProduct) => (
                 <ProductCard key={relatedProduct.id} product={relatedProduct} />

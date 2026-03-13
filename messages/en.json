@@ -76,5 +76,39 @@
       "requestQuote": "Request a Quote",
       "buyingGuides": "Read Buying Guides"
     }
+  },
+  "product": {
+    "reviews": "reviews",
+    "inStock": "In Stock",
+    "available": "available",
+    "outOfStock": "Out of Stock",
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to wishlist",
+    "share": "Share",
+    "addToCompare": "Add to compare",
+    "removeFromCompare": "Remove from compare",
+    "freeDelivery": "Free Delivery",
+    "deliveryDays": "Estimated delivery in {days} business days",
+    "warranty": "Warranty",
+    "support": "365 Days Support",
+    "supportDesc": "24/7 after-sales service and support",
+    "needHelp": "Need help with this product?",
+    "needHelpDesc": "Our experts are ready to assist you with specifications and installation.",
+    "contactUs": "Contact Us",
+    "call": "Call: +66 2 123 4567",
+    "tabs": {
+      "description": "Description",
+      "specifications": "Specifications",
+      "reviews": "Reviews"
+    },
+    "productDescription": "Product Description",
+    "keyFeatures": "Key Features",
+    "technicalSpecs": "Technical Specifications",
+    "customerReviews": "Customer Reviews",
+    "writeReview": "Write a Review",
+    "basedOnReviews": "Based on {count} reviews",
+    "relatedProducts": "Related Products",
+    "breadcrumbHome": "Home",
+    "breadcrumbCategories": "Categories"
   }
 }

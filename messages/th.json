@@ -76,5 +76,39 @@
       "requestQuote": "ขอใบเสนอราคา",
       "buyingGuides": "อ่านคู่มือการซื้อ"
     }
+  },
+  "product": {
+    "reviews": "รีวิว",
+    "inStock": "มีสินค้า",
+    "available": "ชิ้นในสต็อก",
+    "outOfStock": "สินค้าหมด",
+    "addToCart": "เพิ่มลงตะกร้า",
+    "addToWishlist": "เพิ่มในรายการโปรด",
+    "share": "แชร์",
+    "addToCompare": "เพิ่มเปรียบเทียบ",
+    "removeFromCompare": "นำออกจากการเปรียบเทียบ",
+    "freeDelivery": "จัดส่งฟรี",
+    "deliveryDays": "คาดว่าจัดส่งภายใน {days} วันทำการ",
+    "warranty": "การรับประกัน",
+    "support": "บริการ 365 วัน",
+    "supportDesc": "บริการหลังการขาย 24/7",
+    "needHelp": "ต้องการความช่วยเหลือเกี่ยวกับสินค้านี้?",
+    "needHelpDesc": "ผู้เชี่ยวชาญของเราพร้อมให้คำปรึกษาด้านสเปกและการติดตั้ง",
+    "contactUs": "ติดต่อเรา",
+    "call": "เรียก: +66 2 123 4567",
+    "tabs": {
+      "description": "รายละเอียด",
+      "specifications": "สเปคสินค้า",
+      "reviews": "รีวิว"
+    },
+    "productDescription": "รายละเอียดสินค้า",
+    "keyFeatures": "คุณสมบัติเด่น",
+    "technicalSpecs": "สเปคเทคนิค",
+    "customerReviews": "รีวิวจากลูกค้า",
+    "writeReview": "เขียนรีวิว",
+    "basedOnReviews": "จากผู้รีวิว {count} รายการ",
+    "relatedProducts": "สินค้าที่เกี่ยวข้อง",
+    "breadcrumbHome": "หน้าแรก",
+    "breadcrumbCategories": "หมวดหมู่"
   }
 }
